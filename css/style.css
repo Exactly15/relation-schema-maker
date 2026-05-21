@@ -1,0 +1,228 @@
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: black; /* All text should be black */
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f5f5f5; /* App background, canvas is white */
+}
+
+#toolbar {
+    height: 60px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.brand {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+#toolbar button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-left: 10px;
+}
+
+#toolbar button:hover {
+    background: #f0f0f0;
+    border-color: #aaa;
+}
+
+#canvas-container {
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: auto; /* Scrollable canvas area */
+    position: relative;
+}
+
+#canvas {
+    width: 4000px;
+    height: 4000px;
+    background-color: white; /* The overall background of the canvas should be white */
+    position: relative;
+    transform-origin: 0 0;
+}
+
+#lines-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Let clicks pass through to tables */
+    z-index: 10;
+}
+
+.connection-path {
+    fill: none;
+    stroke: black; /* All lines black */
+    stroke-width: 2;
+    stroke-linejoin: round;
+}
+
+.connection-path-hover {
+    stroke-width: 4;
+    cursor: pointer;
+    pointer-events: stroke;
+}
+
+/* Table Element */
+.schema-table {
+    position: absolute;
+    background: white;
+    border: 1px solid black;
+    border-radius: 0; /* Professional sharp edges or slight rounding depending on preference. Going with sharp for diagram feel. */
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    min-width: 200px;
+    z-index: 20;
+    user-select: none;
+}
+
+.schema-table.dragging {
+    opacity: 0.8;
+    z-index: 100;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+}
+
+.table-header {
+    background: #f8f8f8;
+    border-bottom: 1px solid black;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-header:active {
+    cursor: grabbing;
+}
+
+.table-title {
+    outline: none;
+    flex-grow: 1;
+}
+
+.table-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+    opacity: 0.5;
+}
+
+.action-btn:hover {
+    opacity: 1;
+}
+
+.action-btn.delete-table-btn:hover {
+    color: #ef4444;
+    opacity: 1;
+}
+
+#clear-btn:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    border-color: #fca5a5;
+}
+
+/* Row wrapper */
+.table-row {
+    display: flex;
+    flex-direction: row; /* Multi-col, single row */
+}
+
+/* Cell */
+.table-cell {
+    border-right: 1px solid black;
+    padding: 10px;
+    min-width: 80px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+}
+
+.table-cell:last-child {
+    border-right: none;
+}
+
+.cell-content {
+    outline: none;
+    width: 100%;
+    text-align: center;
+    min-height: 20px;
+    margin-bottom: 8px; /* space for connection dot */
+}
+
+/* Connection Node */
+.conn-node {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border: 2px solid black;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -6px; /* Positioned at the very bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: crosshair;
+    z-index: 30;
+}
+
+.conn-node:hover {
+    background: #eee;
+    transform: translateX(-50%) scale(1.2);
+}
+
+.conn-node.active {
+    background: black;
+}
+
+/* Hide unconnected nodes during export */
+#canvas.exporting .conn-node:not(.connected) {
+    visibility: hidden;
+}
+
+/* Hide table edit actions (+Col, Delete) during export */
+#canvas.exporting .table-actions {
+    display: none;
+}
+
+/* Snap Lines */
+.snap-line {
+    stroke: black;
+    stroke-width: 1px;
+    stroke-dasharray: 4 4;
+    pointer-events: none;
+    z-index: 5;
+}

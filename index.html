@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationing Schema Maker</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="toolbar">
+        <div class="brand">Relationing Schema Maker</div>
+        <div class="actions">
+            <button id="add-table-btn">Add Table</button>
+            <button id="export-btn">Export PNG</button>
+            <button id="save-json-btn">Export JSON</button>
+            <button id="load-json-btn">Import JSON</button>
+            <button id="clear-btn">Start Afresh</button>
+            <input type="file" id="import-file-input" style="display: none;" accept=".json">
+        </div>
+    </div>
+    
+    <div id="canvas-container">
+        <div id="canvas">
+            <!-- SVG overlay for rendering lines -->
+            <svg id="lines-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="black" />
+                    </marker>
+                </defs>
+            </svg>
+            <!-- Tables will be appended here -->
+        </div>
+    </div>
+
+    <!-- html2canvas library for PNG export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
