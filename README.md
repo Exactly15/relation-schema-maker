@@ -2,6 +2,9 @@
 
 > A premium, interactive database schema designer built with Vanilla JavaScript, HTML5, and SVG. Drag-and-drop tables, define fields, map relationships visually, and export your diagrams in seconds.
 
+### 🌐 Live Demo
+Experience the application live: **[lighthearted-croquembouche-640a40.netlify.app](https://lighthearted-croquembouche-640a40.netlify.app/)**
+
 ---
 
 ## ✨ Features
